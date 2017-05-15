@@ -8,22 +8,23 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.viking.myframe.R;
 import com.viking.myframe.activity.APPActivityManager;
+import com.viking.myframe.views.ActionBarView;
 
 import static com.viking.myframe.base.BaseApplication.isExit;
 
 /**
+ * 所有Activity的基类
  * Created by 周正一 on 2017/4/30.
  */
-
 public abstract class BaseActivity extends FragmentActivity {
-    protected ActionBar mActionBar;
     protected Context mContext;
+    protected ActionBarView topbarView;
     /**
      * 双击退出的消息处理
      */
@@ -66,7 +67,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
     /**
      * 处理返回事件，如果在首页 连续按两次back键退出APP
-     * */
+     */
     public void dealAppBack() {
         if (!isExit) {
             isExit = true;
@@ -80,6 +81,22 @@ public abstract class BaseActivity extends FragmentActivity {
             APPActivityManager.getInstance().finishActivities();
             System.exit(0);
         }
+    }
+
+
+    /**
+     * Gets topbar.
+     *
+     * @return the topbar
+     */
+    public ActionBarView getTopbar() {
+        if (topbarView == null) {
+            View view = findViewById(R.id.topbar_view);
+            if (view != null) {
+                topbarView = new ActionBarView(view);
+            }
+        }
+        return topbarView;
     }
 
     /**
