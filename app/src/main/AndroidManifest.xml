@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.login.LoginActivity"/>
+        <activity android:name=".activity.test.ToolbarTestActivity" android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@ import android.view.animation.Animation;
 import android.widget.RelativeLayout;
 
 import com.viking.myframe.R;
-import com.viking.myframe.activity.login.LoginActivity;
+import com.viking.myframe.activity.MainActivity;
 import com.viking.myframe.base.BaseActivity;
 
 /**
@@ -60,7 +60,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                invoke(SplashActivity.this,LoginActivity.class);
+                invoke(SplashActivity.this,MainActivity.class);
                 finish();
             }
 

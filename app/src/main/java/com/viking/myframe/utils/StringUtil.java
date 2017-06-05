@@ -12,6 +12,7 @@ import android.animation.FloatEvaluator;
 import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.CountDownTimer;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -26,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Collection;
@@ -47,8 +49,8 @@ public class StringUtil {
     /**
      * 判断对象或对象数组中每一个对象是否为空: 对象为null，字符序列长度为0，集合类、Map为empty
      *
-     * @param obj
-     * @return
+     * @param obj the obj
+     * @return boolean boolean
      */
     public static boolean isNullOrEmpty(Object obj) {
         if (obj == null)
@@ -80,8 +82,8 @@ public class StringUtil {
     /**
      * 字符串是否全数字（无符号、小数点）
      *
-     * @param str
-     * @return
+     * @param str the str
+     * @return boolean boolean
      */
     public static boolean isDigit(String str) {
         char c;
@@ -96,8 +98,8 @@ public class StringUtil {
     /**
      * 字符串是否全数字或英文字母（无符号、小数点）
      *
-     * @param str
-     * @return
+     * @param str the str
+     * @return boolean boolean
      */
     public static boolean isAlphaDigit(String str) {
         char c;
@@ -111,6 +113,9 @@ public class StringUtil {
 
     /**
      * 判断字符串是否是整数
+     *
+     * @param value the value
+     * @return the boolean
      */
     public static boolean isInteger(String value) {
         try {
@@ -123,6 +128,9 @@ public class StringUtil {
 
     /**
      * 判断字符串是否是浮点数
+     *
+     * @param value the value
+     * @return the boolean
      */
     public static boolean isDouble(String value) {
         try {
@@ -137,6 +145,9 @@ public class StringUtil {
 
     /**
      * 判断字符串是否是数字
+     *
+     * @param value the value
+     * @return the boolean
      */
     public static boolean isNumber(String value) {
         return isInteger(value) || isDouble(value);
@@ -148,7 +159,7 @@ public class StringUtil {
      *
      * @param originalNumStr 原来的要被格式化的数字字符串
      * @param scale          小数点保留位数
-     * @return
+     * @return kibolit division str
      */
     public static String getKibolitDivisionStr(String originalNumStr, int scale) {
         try {
@@ -179,7 +190,7 @@ public class StringUtil {
      *
      * @param text  原数字
      * @param scale 小数点保留位数
-     * @return
+     * @return string string
      */
     public static String parseStringPattern2(String text, int scale) {
         if (text == null || "".equals(text) || "null".equals(text)) {
@@ -201,8 +212,8 @@ public class StringUtil {
     /**
      * 取得类的简单名
      *
-     * @param obj
-     * @return 类的简单名
+     * @param obj the obj
+     * @return 类的简单名 simple name
      */
     public static String getSimpleName(Object obj) {
         if (obj == null)
@@ -221,8 +232,8 @@ public class StringUtil {
     /**
      * 获取字符串的长度, 如果为null则长度为0
      *
-     * @param str
-     * @return
+     * @param str the str
+     * @return int int
      */
     public static int length(String str) {
         if (isNullOrEmpty(str))
@@ -233,6 +244,12 @@ public class StringUtil {
     }
 
 
+    /**
+     * To locale locale.
+     *
+     * @param localeStr the locale str
+     * @return the locale
+     */
     public static Locale toLocale(String localeStr) {
         if (localeStr == null)
             return null;
@@ -252,8 +269,8 @@ public class StringUtil {
      * <p/>
      * 特殊注意：当传入值为null时，返回”“ 当传入值为”“时，返回”-“ 当传入值只包含”,“时，返回”-,-“
      *
-     * @param args
-     * @return fillStr
+     * @param args the args
+     * @return fillStr string
      */
     public static String fillNullArgs(String args) {
 
@@ -288,8 +305,8 @@ public class StringUtil {
     /**
      * 验证时间（小时分钟）是否合法 0000-2359
      *
-     * @param time
-     * @return
+     * @param time the time
+     * @return boolean boolean
      */
     public static boolean checkTime(String time) {
         boolean flag = true;
@@ -317,10 +334,12 @@ public class StringUtil {
     }
 
     /**
-     * @param nativeString
-     * @return
+     * Gets iso string.
+     *
+     * @param nativeString the native string
+     * @return iso string
      * @Title: getISOString
-     * @Description: 获取转换成ISO8859-1的字符串
+     * @Description: 获取转换成ISO8859 -1的字符串
      */
     public static String getISOString(String nativeString) {
         String checkNickNameStr = "";
@@ -337,8 +356,8 @@ public class StringUtil {
     /**
      * 类型转换
      *
-     * @param str
-     * @return
+     * @param str the str
+     * @return float from str
      */
     public static float getFloatFromStr(String str) {
         float f = 0f;
@@ -353,8 +372,8 @@ public class StringUtil {
     /**
      * 类型转换
      *
-     * @param str
-     * @return
+     * @param str the str
+     * @return double from str
      */
     public static double getDoubleFromStr(String str) {
         double d = 0;
@@ -366,6 +385,12 @@ public class StringUtil {
         return d;
     }
 
+    /**
+     * Gets int from str.
+     *
+     * @param str the str
+     * @return the int from str
+     */
     public static Integer getIntFromStr(String str) {
         Integer f = 0;
         try {
@@ -379,11 +404,11 @@ public class StringUtil {
     /**
      * 自动播放文本
      *
-     * @param target
-     * @param start
-     * @param end
-     * @param duration
-     * @param scale
+     * @param target   the target
+     * @param start    the start
+     * @param end      the end
+     * @param duration the duration
+     * @param scale    the scale
      */
     public static void autoTextPlay(final TextView target, final float start,
                                     final float end, long duration, final int scale) {
@@ -413,8 +438,8 @@ public class StringUtil {
     /**
      * 秒数转换成分钟和秒数
      *
-     * @param totleSeconds
-     * @return
+     * @param totleSeconds the totle seconds
+     * @return last time
      */
     public static String getLastTime(int totleSeconds) {
         int month = totleSeconds / 60;
@@ -433,8 +458,8 @@ public class StringUtil {
     /**
      * 秒数转换成小时分钟和秒数
      *
-     * @param totleSeconds
-     * @return
+     * @param totleSeconds the totle seconds
+     * @return last time withhour
      */
     public static String getLastTimeWithhour(int totleSeconds) {
         int hour = totleSeconds / 60 / 60;
@@ -460,7 +485,7 @@ public class StringUtil {
      *
      * @param str      字符串
      * @param lightStr 需要高亮的部分字符串
-     * @return SpannableStringBuilder
+     * @return SpannableStringBuilder spannable string builder
      */
     public static SpannableStringBuilder lightStr(String str, String lightStr) {
         int fstart = str.indexOf(lightStr);
@@ -472,6 +497,14 @@ public class StringUtil {
         return style;
     }
 
+    /**
+     * Light str spannable string builder.
+     *
+     * @param str      the str
+     * @param lightStr the light str
+     * @param color    the color
+     * @return the spannable string builder
+     */
     public static SpannableStringBuilder lightStr(String str, String lightStr, String color) {
         int fstart = str.indexOf(lightStr);
         int fend = fstart + lightStr.length();
@@ -484,8 +517,8 @@ public class StringUtil {
     /**
      * 获取用户星级
      *
-     * @param score
-     * @return
+     * @param score the score
+     * @return star star
      */
     public static float getStar(float score) {
         if (score > 100) {
@@ -506,6 +539,9 @@ public class StringUtil {
 
     /**
      * 使用gzip进行压缩
+     *
+     * @param primStr the prim str
+     * @return the string
      */
     public static String zip(String primStr) {
         if (primStr == null || primStr.length() == 0) {
@@ -536,8 +572,8 @@ public class StringUtil {
      * Description:使用gzip进行解压缩
      * </p>
      *
-     * @param compressedStr
-     * @return
+     * @param compressedStr the compressed str
+     * @return string string
      */
     public static String unzip(String compressedStr) {
         if (compressedStr == null) {
@@ -589,8 +625,8 @@ public class StringUtil {
     /**
      * desc:将数组转为16进制
      *
-     * @param bArray
-     * @return modified:
+     * @param bArray the b array
+     * @return modified :
      */
     public static String bytesToHexString(byte[] bArray) {
         if (bArray == null) {
@@ -614,8 +650,8 @@ public class StringUtil {
      * desc:将16进制的数据转为数组
      * <p>创建人：聂旭阳 , 2014-5-25 上午11:08:33</p>
      *
-     * @param data
-     * @return modified:
+     * @param data the data
+     * @return modified :
      */
     public static byte[] stringToBytes(String data) {
         String hexString = data.toUpperCase().trim();
@@ -650,6 +686,9 @@ public class StringUtil {
 
     /**
      * 将价格格式化为带人民币符号
+     *
+     * @param price the price
+     * @return the spannable string builder
      */
     public static SpannableStringBuilder formatMoney(String price) {
         String str=parseStringPattern2(price, 2);
@@ -660,12 +699,20 @@ public class StringUtil {
      * price 价格
      * color 颜色
      *
+     * @param price the price
+     * @return the spannable string builder
      */
     public static SpannableStringBuilder formatMoney(double price) {
         String str = parseStringPattern2(String.valueOf(price), 2);
         return  resizeStr(addRmbTag(str),2);
     }
 
+    /**
+     * Add rmb tag string.
+     *
+     * @param price the price
+     * @return the string
+     */
     public static String addRmbTag(String price){
         String moneyStr = "¥%s";
         return String.format(moneyStr, price);
@@ -673,6 +720,11 @@ public class StringUtil {
 
     /**
      * 得到服务费
+     *
+     * @param totalPrice  the total price
+     * @param ticketPrice the ticket price
+     * @param num         the num
+     * @return the service money
      */
     public static String getServiceMoney(double totalPrice, double ticketPrice, int num) {
         double totalTicketPrice = ticketPrice * num;
@@ -681,6 +733,10 @@ public class StringUtil {
 
     /**
      * 计算相差价格
+     *
+     * @param basePrice   the base price
+     * @param ticketPrice the ticket price
+     * @return the differ price
      */
     public static String getDifferPrice(double basePrice, double ticketPrice) {
         double diff = ticketPrice - basePrice;
@@ -698,6 +754,9 @@ public class StringUtil {
 
     /**
      * 将int类型的价格转为带人民币符号的
+     *
+     * @param price the price
+     * @return the string
      */
     public static String formatMoney(int price) {
         String moneyStr = "¥%d";
@@ -706,12 +765,22 @@ public class StringUtil {
 
     /**
      * 将价格格式化
+     *
+     * @param price the price
+     * @return the string
      */
     public static String formatIncomeMoney(double price) {
         String moneyStr = "+%f元";
         return String.format(moneyStr, price);
     }
 
+    /**
+     * Format str string.
+     *
+     * @param formatStr the format str
+     * @param str       the str
+     * @return the string
+     */
     public static String formatStr(String formatStr, String str) {
         return String.format(formatStr, str);
     }
@@ -719,7 +788,10 @@ public class StringUtil {
 
     /**
      * 分离6:00-8:00这样的时间
-     **/
+     *
+     * @param time the time
+     * @return the string [ ]
+     */
     public static String[] separateTime(String time) {
         int index = time.indexOf("-");
         String[] str = new String[2];
@@ -728,27 +800,14 @@ public class StringUtil {
         return str;
     }
 
-    /**
-     * 合成发票的类型和抬头
-     */
-    public static String invoiceCompound(String invoiceType, String invoiceTitle) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(invoiceType);
-        stringBuilder.append("-");
-        stringBuilder.append(invoiceTitle);
-        return stringBuilder.toString();
-    }
 
     /**
-     * 商品类型后面加上运力二字
+     * Unit compound string.
+     *
+     * @param number the number
+     * @param unit   the unit
+     * @return the string
      */
-    public static String capacityCompound(String businessType) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(businessType);
-        sb.append("运力");
-        return sb.toString();
-    }
-
     public static String unitCompound(String number, String unit) {
         if (TextUtils.isEmpty(number)) {
             return "空";
@@ -762,7 +821,10 @@ public class StringUtil {
 
     /**
      * 拼接两个字符串，不判断是否为空
-     * */
+     *
+     * @param str the str
+     * @return the string
+     */
     public static String strCompound(String ... str){
         StringBuilder sb=new StringBuilder();
         for(int i=0;i<str.length;i++){
@@ -773,6 +835,11 @@ public class StringUtil {
 
     /**
      * 得到待付款金额
+     *
+     * @param totalPrice       the total price
+     * @param unconfirmedPrice the unconfirmed price
+     * @param paidPrice        the paid price
+     * @return the wait pay price
      */
     public static String getWaitPayPrice(double totalPrice, double unconfirmedPrice, double paidPrice) {
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.CHINA);
@@ -782,6 +849,10 @@ public class StringUtil {
 
     /**
      * 根据分隔符分割字符串
+     *
+     * @param str    the str
+     * @param symbol the symbol
+     * @return the string [ ]
      */
     public static String[] splitStr(String str, String symbol) {
         String[] split;
@@ -799,16 +870,21 @@ public class StringUtil {
 
     /***
      * 单价*数量
+     *
+     * @param unitPrice the unit price
+     * @param number    the number
+     * @return the double
      */
     public static double getSumPrice(double unitPrice,int number){
         return unitPrice*number;
     }
+
     /**
      * 金额字符串的小数点后缩小
      *
-     * @param str      字符串
+     * @param str          字符串
      * @param resizeNumber 需要缩小的部分字符串长度
-     * @return SpannableStringBuilder
+     * @return SpannableStringBuilder spannable string builder
      */
     public static SpannableStringBuilder resizeStr(String str, int resizeNumber) {
         int fstart = str.length()-resizeNumber;
@@ -817,4 +893,157 @@ public class StringUtil {
         style.setSpan(new RelativeSizeSpan(0.7f), fstart, fend, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         return style;
     }
+
+    /**
+     * 判断手机号是否有效
+     *
+     * @param phoneNum 手机号
+     * @return 有效则返回true, 无效则返回false
+     */
+    public static boolean isPhoneNumValid(String phoneNum) {
+        return phoneNum.length() == 11 && phoneNum.matches("[0-9]{1,}");
+    }
+
+    /**
+     * Is password valid boolean.
+     *
+     * @param password 用户输入密码
+     * @return 有效则返回true, 无效则返回false
+     */
+    public static boolean isPasswordValid(String password) {
+        return password.length() >= 8 && password.length() <= 16;
+    }
+
+    /**
+     * Is username vaild boolean.
+     *
+     * @param username 用户名
+     * @return 同上 boolean
+     */
+    public static boolean isUsernameVaild(String username) {
+        return !username.matches("[0-9]+") && username.matches("^[a-z0-9_-]{4,24}$");
+    }
+
+    /**
+     * Is verify code valid boolean.
+     *
+     * @param verifyCode 验证码
+     * @return 同上 boolean
+     */
+    public static boolean isVerifyCodeValid(String verifyCode) {
+        return verifyCode.length() > 3;
+    }
+
+    /**
+     * Gets well format mobile.
+     *
+     * @param countryCode 国家码
+     * @param phoneNumber 手机号
+     * @return 返回拼接后的字符串 well format mobile
+     */
+    public static String getWellFormatMobile(String countryCode, String phoneNumber) {
+        return countryCode + "-" + phoneNumber;
+    }
+
+
+    /**
+     * 带省略号的字符串截断
+     *
+     * @param source 原字符串
+     * @param length 需要截多长
+     * @return the string
+     */
+    public static String getLimitString(String source, int length){
+        if (null!=source && source.length()>length){
+//            int reallen = 0;
+            return source.substring(0, length)+"...";
+        }
+        return source;
+    }
+
+
+    /**
+     * 不带省略号的字符串截断
+     *
+     * @param source the source
+     * @param length the length
+     * @return the string
+     */
+    public static String getLimitStringWithoutNode(String source, int length){
+        if (null != source && source.length() > length){
+            return source.substring(0, length);
+        }
+        return source;
+    }
+
+    /**
+     * 在按钮上启动一个定时器
+     * @param tvVerifyCode 验证码控件
+     * @param defaultString 按钮上默认的字符串
+     * @param max 失效时间（单位：s）
+     * @param interval 更新间隔（单位：s）
+     * */
+    public static void startTimer(final WeakReference<TextView> tvVerifyCode,
+                                  final String defaultString,
+                                  int max,
+                                  int interval)
+    {
+        tvVerifyCode.get().setEnabled(false);
+
+        // 由于CountDownTimer并不是准确计时，在onTick方法调用的时候，time会有1-10ms左右的误差，这会导致最后一秒不会调用onTick()
+        // 因此，设置间隔的时候，默认减去了10ms，从而减去误差。
+        // 经过以上的微调，最后一秒的显示时间会由于10ms延迟的积累，导致显示时间比1s长max*10ms的时间，其他时间的显示正常,总时间正常
+        new CountDownTimer(max * 1000, interval * 1000 - 10) {
+
+            @Override
+            public void onTick(long time) {
+                // 第一次调用会有1-10ms的误差，因此需要+15ms，防止第一个数不显示，第二个数显示2s
+                if(null == tvVerifyCode.get())
+                    this.cancel();
+                else
+                    tvVerifyCode.get().setText("" + ((time + 15) / 1000) + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                if(null == tvVerifyCode.get()) {
+                    this.cancel();
+                    return;
+                }
+                tvVerifyCode.get().setEnabled(true);
+                tvVerifyCode.get().setText(defaultString);
+
+            }
+        }.start();
+    }
+
+
+    /**
+     * 获取一段字符串的字符个数（包含中英文，一个中文算2个字符）
+     */
+    public static int getCharacterNum(final String content) {
+        if (null == content || "".equals(content)) {
+            return 0;
+        } else {
+            return (content.length() + getChineseNum(content));
+        }
+    }
+
+    /**
+     * 返回字符串里中文字或者全角字符的个数
+     */
+    public static int getChineseNum(String s) {
+        int num = 0;
+        char[] myChar = s.toCharArray();
+        for (int i = 0; i < myChar.length; i++) {
+            if ((char) (byte) myChar[i] != myChar[i]) {
+                num++;
+            }
+        }
+        return num;
+    }
+
+
+
+
 }
